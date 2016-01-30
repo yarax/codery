@@ -1,0 +1,348 @@
+{
+  "errors": [],
+  "warnings": [],
+  "version": "1.12.12",
+  "hash": "16ad7d659534493774ab",
+  "time": 5611,
+  "publicPath": "",
+  "assetsByChunkName": {
+    "main": "bundle.js"
+  },
+  "assets": [
+    {
+      "name": "bundle.js",
+      "size": 3898,
+      "chunks": [
+        0
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "emitted": true
+    }
+  ],
+  "chunks": [
+    {
+      "id": 0,
+      "rendered": true,
+      "initial": true,
+      "entry": true,
+      "extraAsync": false,
+      "size": 1542,
+      "names": [
+        "main"
+      ],
+      "files": [
+        "bundle.js"
+      ],
+      "hash": "72377c5efb4b5de4baef",
+      "parents": [],
+      "modules": [
+        {
+          "id": 0,
+          "identifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "name": "./src/main.js",
+          "index": 0,
+          "index2": 3,
+          "size": 215,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            0
+          ],
+          "assets": [],
+          "issuer": null,
+          "profile": {
+            "factory": 19,
+            "building": 5511
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "reasons": [],
+          "source": "'use strict';\n\nvar React = require('react');\nvar ReactDOM = require('react-dom');\nvar CodeBar = require('./components/CodeBar');\n\nReactDOM.render(React.createElement(CodeBar, null), document.getElementById('code'));"
+        },
+        {
+          "id": 1,
+          "identifier": "/Users/rax/sandbox/codery/node_modules/react/react.js",
+          "name": "./~/react/react.js",
+          "index": 1,
+          "index2": 0,
+          "size": 56,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            0
+          ],
+          "assets": [],
+          "issuer": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "profile": {
+            "factory": 13,
+            "building": 46
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "reasons": [
+            {
+              "moduleId": 0,
+              "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+              "module": "./src/main.js",
+              "moduleName": "./src/main.js",
+              "type": "cjs require",
+              "userRequest": "react",
+              "loc": "3:12-28"
+            },
+            {
+              "moduleId": 3,
+              "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/components/CodeBar.js",
+              "module": "./src/components/CodeBar.js",
+              "moduleName": "./src/components/CodeBar.js",
+              "type": "cjs require",
+              "userRequest": "react",
+              "loc": "3:12-28"
+            }
+          ],
+          "source": "'use strict';\n\nmodule.exports = require('./lib/React');\n"
+        },
+        {
+          "id": 2,
+          "identifier": "/Users/rax/sandbox/codery/node_modules/react-dom/index.js",
+          "name": "./~/react-dom/index.js",
+          "index": 2,
+          "index2": 1,
+          "size": 63,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            0
+          ],
+          "assets": [],
+          "issuer": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "profile": {
+            "factory": 11,
+            "building": 48
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "reasons": [
+            {
+              "moduleId": 0,
+              "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+              "module": "./src/main.js",
+              "moduleName": "./src/main.js",
+              "type": "cjs require",
+              "userRequest": "react-dom",
+              "loc": "4:15-35"
+            }
+          ],
+          "source": "'use strict';\n\nmodule.exports = require('react/lib/ReactDOM');\n"
+        },
+        {
+          "id": 3,
+          "identifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/components/CodeBar.js",
+          "name": "./src/components/CodeBar.js",
+          "index": 3,
+          "index2": 2,
+          "size": 1208,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            0
+          ],
+          "assets": [],
+          "issuer": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "profile": {
+            "factory": 9,
+            "building": 48,
+            "dependencies": 2
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "reasons": [
+            {
+              "moduleId": 0,
+              "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+              "module": "./src/main.js",
+              "moduleName": "./src/main.js",
+              "type": "cjs require",
+              "userRequest": "./components/CodeBar",
+              "loc": "5:14-45"
+            }
+          ],
+          "source": "'use strict';\n\nvar React = require('react');\n\nvar MyComponent = React.createClass({\n    displayName: 'MyComponent',\n\n    render: function render() {\n        return React.createElement(\n            'table',\n            null,\n            React.createElement(\n                'thead',\n                null,\n                React.createElement(\n                    'tr',\n                    null,\n                    React.createElement(\n                        'td',\n                        null,\n                        '1'\n                    ),\n                    React.createElement(\n                        'td',\n                        null,\n                        '{'\n                    )\n                ),\n                React.createElement(\n                    'tr',\n                    null,\n                    React.createElement(\n                        'td',\n                        null,\n                        '2'\n                    ),\n                    React.createElement(\n                        'td',\n                        null,\n                        '\"name\": \"swagger\",'\n                    )\n                )\n            )\n        );\n    }\n\n});\n\nmodule.exports = MyComponent;"
+        }
+      ],
+      "filteredModules": 0,
+      "origins": [
+        {
+          "moduleId": 0,
+          "module": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "moduleName": "./src/main.js",
+          "loc": "",
+          "name": "main",
+          "reasons": []
+        }
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": 0,
+      "identifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+      "name": "./src/main.js",
+      "index": 0,
+      "index2": 3,
+      "size": 215,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        0
+      ],
+      "assets": [],
+      "issuer": null,
+      "profile": {
+        "factory": 19,
+        "building": 5511
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "reasons": [],
+      "source": "'use strict';\n\nvar React = require('react');\nvar ReactDOM = require('react-dom');\nvar CodeBar = require('./components/CodeBar');\n\nReactDOM.render(React.createElement(CodeBar, null), document.getElementById('code'));"
+    },
+    {
+      "id": 1,
+      "identifier": "/Users/rax/sandbox/codery/node_modules/react/react.js",
+      "name": "./~/react/react.js",
+      "index": 1,
+      "index2": 0,
+      "size": 56,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        0
+      ],
+      "assets": [],
+      "issuer": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+      "profile": {
+        "factory": 13,
+        "building": 46
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "reasons": [
+        {
+          "moduleId": 0,
+          "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "module": "./src/main.js",
+          "moduleName": "./src/main.js",
+          "type": "cjs require",
+          "userRequest": "react",
+          "loc": "3:12-28"
+        },
+        {
+          "moduleId": 3,
+          "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/components/CodeBar.js",
+          "module": "./src/components/CodeBar.js",
+          "moduleName": "./src/components/CodeBar.js",
+          "type": "cjs require",
+          "userRequest": "react",
+          "loc": "3:12-28"
+        }
+      ],
+      "source": "'use strict';\n\nmodule.exports = require('./lib/React');\n"
+    },
+    {
+      "id": 2,
+      "identifier": "/Users/rax/sandbox/codery/node_modules/react-dom/index.js",
+      "name": "./~/react-dom/index.js",
+      "index": 2,
+      "index2": 1,
+      "size": 63,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        0
+      ],
+      "assets": [],
+      "issuer": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+      "profile": {
+        "factory": 11,
+        "building": 48
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "reasons": [
+        {
+          "moduleId": 0,
+          "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "module": "./src/main.js",
+          "moduleName": "./src/main.js",
+          "type": "cjs require",
+          "userRequest": "react-dom",
+          "loc": "4:15-35"
+        }
+      ],
+      "source": "'use strict';\n\nmodule.exports = require('react/lib/ReactDOM');\n"
+    },
+    {
+      "id": 3,
+      "identifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/components/CodeBar.js",
+      "name": "./src/components/CodeBar.js",
+      "index": 3,
+      "index2": 2,
+      "size": 1208,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        0
+      ],
+      "assets": [],
+      "issuer": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+      "profile": {
+        "factory": 9,
+        "building": 48,
+        "dependencies": 2
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "reasons": [
+        {
+          "moduleId": 0,
+          "moduleIdentifier": "/Users/rax/sandbox/codery/node_modules/babel-loader/index.js?{\"presets\":[\"react\",\"es2015\"]}!/Users/rax/sandbox/codery/src/main.js",
+          "module": "./src/main.js",
+          "moduleName": "./src/main.js",
+          "type": "cjs require",
+          "userRequest": "./components/CodeBar",
+          "loc": "5:14-45"
+        }
+      ],
+      "source": "'use strict';\n\nvar React = require('react');\n\nvar MyComponent = React.createClass({\n    displayName: 'MyComponent',\n\n    render: function render() {\n        return React.createElement(\n            'table',\n            null,\n            React.createElement(\n                'thead',\n                null,\n                React.createElement(\n                    'tr',\n                    null,\n                    React.createElement(\n                        'td',\n                        null,\n                        '1'\n                    ),\n                    React.createElement(\n                        'td',\n                        null,\n                        '{'\n                    )\n                ),\n                React.createElement(\n                    'tr',\n                    null,\n                    React.createElement(\n                        'td',\n                        null,\n                        '2'\n                    ),\n                    React.createElement(\n                        'td',\n                        null,\n                        '\"name\": \"swagger\",'\n                    )\n                )\n            )\n        );\n    }\n\n});\n\nmodule.exports = MyComponent;"
+    }
+  ],
+  "filteredModules": 0,
+  "children": []
+}
