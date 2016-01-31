@@ -13,6 +13,7 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "redux": "^3.1.2",
+    "request": "^2.69.0",
     "webpack": "^1.12.12"
   },
   "devDependencies": {},
