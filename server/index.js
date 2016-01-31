@@ -32,12 +32,11 @@ app.get('/callback', function (req, res) {
         },
         'method': 'POST',
         url: 'https://github.com/login/oauth/access_token',
-        body: {
+        form: {
             client_id: '6eb674e7c00e113821c2',
             client_secret: '745b3b951c0e59a502d7d6aa862d1b9957844891',
             code: code
-        },
-        json: true
+        }
     };
     request(options, function (err, http, body) {
         var obj = qs.parse(body);
