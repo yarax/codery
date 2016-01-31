@@ -42,7 +42,7 @@ app.get('/files', function (req, res) {
     res.send(items);
 });
 
-app.get('/repolist', function () {
+app.get('/repolist', function (req, res) {
     var access_token = req.cookies.usk;
     var options = {
         headers: {
