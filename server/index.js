@@ -35,7 +35,6 @@ app.get('/callback', function (req, res) {
         body: {
             client_id: '6eb674e7c00e113821c2',
             client_secret: '745b3b951c0e59a502d7d6aa862d1b9957844891',
-            redirect_uri: 'http://codery.me/callback',
             code: code
         },
         json: true
