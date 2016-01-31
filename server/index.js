@@ -43,12 +43,13 @@ app.get('/files', function (req, res) {
 });
 
 app.get('/repolist', function () {
+    var access_token = req.cookies.usk;
     var options = {
         headers: {
             'User-Agent': 'request'
         },
         'method': 'GET',
-        url: 'https://api.github.com/user/repos?access_token=' + obj.access_token
+        url: 'https://api.github.com/user/repos?access_token=' + access_token
     };
 
     request.get(options, function (err, http, body) {
