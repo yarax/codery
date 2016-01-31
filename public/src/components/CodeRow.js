@@ -5,12 +5,6 @@ var store = require('../redux/store');
 
 let CodeRow = React.createClass({
 
-    getInitialState: function () {
-        return {
-            comments: []
-        };
-    },
-
     commentBubble: function (index, event) {
         store.dispatch({
             type: 'SHOW_BUBBLE',

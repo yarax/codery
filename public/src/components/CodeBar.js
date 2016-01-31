@@ -6,13 +6,6 @@ console.log("RAX", store);
 
 var CodeBar = React.createClass({
 
-    getInitialState: function () {
-        return {
-            rows: '',
-            bubbles: []
-        };
-    },
-
     render: function () {
         let rows = store.getState().rows.map(function (line, i) {
             return <CodeRow key={i} index={i} line={line}/>;
@@ -28,17 +21,6 @@ var CodeBar = React.createClass({
             </div>
         );
 
-    },
-
-    componentDidMount: function () {
-        $.get('/file/?path=index.js', (resp) => {
-
-            store.dispatch({
-                type: 'BUILD_ROWS',
-                text: resp
-            });
-
-        });
     }
 });
 

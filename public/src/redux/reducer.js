@@ -7,7 +7,8 @@ module.exports = function (originState, action) {
             bubbles: [],
             comments: [],
             files: {},
-            unfoldFiles: {}
+            unfoldFiles: {},
+            repolist: []
         };
     }
 
@@ -36,6 +37,10 @@ module.exports = function (originState, action) {
             break;
         case 'FOLD':
             state.unfoldFiles[action.item] = false;
+            break;
+        case 'SET_REPOLIST':
+            state.repolist = action.items;
+            break;
 
 
     }

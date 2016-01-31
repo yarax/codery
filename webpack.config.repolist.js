@@ -1,11 +1,11 @@
 module.exports = {
-    entry: __dirname + "/public/src/review",
+    entry: __dirname + "/public/src/repolist",
     cache: true,
     watch: true,
     devtool: "eval",
     output: {
         path: __dirname + "/public/dist",
-        filename: "review.js"
+        filename: "repolist.js"
     },
     module: {
         loaders: [

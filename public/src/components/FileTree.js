@@ -3,22 +3,23 @@ let store = require('../redux/store');
 let CodeBar = require('./CodeBar');
 let $ = require('jquery');
 var globalIt = 0;
+var hashId = window.location.href.match(/#(\d+)$/)[1];
 var FileTree = React.createClass({
 
-    dirClick: function (item, id, event) {
-        let root = this.props.root || '/';
-        let branch = root + '/' + item;
-        let test = store.getState().unfoldFiles[branch];
+    dirClick: function (itemName, id, event) {
+        let root = this.getRoot();
+        let itemId = this.getItemId(itemName);
+        let test = store.getState().unfoldFiles[itemId];
         let arrow = test ? '&#9658;' : '&#9660;';
         $('#' + id).find('i').html(arrow);
         store.dispatch({
             type: test ? 'FOLD' : 'UNFOLD',
-            item: root + '/' + item
+            item: itemId
         });
     },
 
     componentDidMount: function () {
-        let root = this.props.root || '/';
+        let root = this.getRoot();
         $.get('/files?path=' + root, (items) => {
             store.dispatch({
                 type: 'SET_FILE_LIST',
@@ -29,7 +30,7 @@ var FileTree = React.createClass({
     },
 
     fileClick: function (name) {
-        let root = this.props.root || '/';
+        let root = this.getRoot();
         $.get('/file/?path=' + encodeURIComponent(root + '/' + name), (resp) => {
 
             store.dispatch({
@@ -40,27 +41,43 @@ var FileTree = React.createClass({
         });
     },
 
+    getRoot: function () {
+        return this.props.root || '/' + hashId;
+    },
+
     itemClick: function (item, id, event) {
         if (item.type === 'dir') {
             this.dirClick(item.name, id, event);
         } else {
             this.fileClick(item.name, event);
         }
-        event.stopPropagation();
+        if (event) {
+            event.stopPropagation();
+        }
         return false;
+    },
+
+    getItemId: function (itemName) {
+        let root = this.getRoot();
+        let branch = root + '/' + itemName;
+        return branch.replace(/\//g, '_');
     },
 
     render: function () {
         globalIt++;
         if (globalIt > 200) return;
-        let root = this.props.root || '/';
+        let root = this.getRoot();
         let files = store.getState().files[root];
         if (files) {
             files = files.map((item, i) => {
                 let pointer = item.type === 'dir' ? <i>&#9658;</i> : '';
+                let id = this.getItemId(item.name);
                 let branch = root + '/' + item.name;
-                let id = branch.replace(/\//g, '_');
-                let children = item.type === 'dir' && store.getState().unfoldFiles[branch] ? <FileTree root={branch}/> : '';
+
+                let alreadyOpenedOrRootDir = store.getState().unfoldFiles[id]/* || (files.length === 1 && files[0].type === 'dir');*/
+                console.log('RENDER', store.getState().unfoldFiles, id);
+
+                let children = item.type === 'dir' && alreadyOpenedOrRootDir ? <FileTree root={branch}/> : '';
                 return <div key={i} id={id} className={item.type} onClick={this.itemClick.bind(this, item, id)}>
                     {pointer}
                     {item.name}
