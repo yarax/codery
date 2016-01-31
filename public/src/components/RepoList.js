@@ -5,7 +5,7 @@ let $ = require('jquery');
 let RepoList = React.createClass({
 
     componentDidMount: function () {
-        $.get('/repolist2', function (resp) {
+        $.get('/repolist', function (resp) {
             store.dispatch({
                 type: 'SET_REPOLIST',
                 items: resp

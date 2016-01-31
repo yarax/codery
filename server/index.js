@@ -79,7 +79,7 @@ app.get('/callback', function (req, res) {
     request(options, function (err, http, body) {
         var obj = qs.parse(body);
         res.cookie('usk', obj.access_token);
-        res.redirect('/reposelect');
+        res.redirect('/reposelect.html');
 
     });
 });
