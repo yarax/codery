@@ -16,9 +16,11 @@ class Api {
 
     getUser() {
         var getUserOption = {
-            url: 'https://api.github.com/user',
+            url: 'https://api.github.com/user?access_token=' + this.accessToken,
             method: 'GET',
-            access_token: this.accessToken
+            headers: {
+                'User-Agent': 'request'
+            }
         };
         return reqPromise(getUserOption);
     }
@@ -38,7 +40,7 @@ Api.login = function(code) {
             code: code
         }
     };
-    reqPromise(options).then((http, body) => {
+    return reqPromise(options).then((http, body) => {
         return qs.parse(body).access_token;
     });
 };
