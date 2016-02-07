@@ -22,7 +22,9 @@ class Api {
                 'User-Agent': 'request'
             }
         };
-        return rp(getUserOption);
+        return rp(getUserOption).then((str) => {
+            return JSON.encode(str);
+        });
     }
 
 }
