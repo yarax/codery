@@ -53,6 +53,7 @@ app.get('/repolist', function (req, res) {
     };
 
     request.get(options, function (err, http, body) {
+        body = JSON.parse(body);
         var items = mapRepos(body);
         res.send(items);
     });
