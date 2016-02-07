@@ -43,7 +43,7 @@ Api.login = function(code) {
 
     return rp(options).then((body) => {
         var data = qs.parse(body);
-        if (data.accessToken) {
+        if (data.access_token) {
             return data.access_token;
         } else {
             throw new Error(body);
