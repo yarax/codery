@@ -1,14 +1,11 @@
 var express = require('express');
-var app = express();
+var router = express.Router();
 var fs = require('fs');
-var request = require('request');
-var qs = require('querystring');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var child = require('child_process');
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(__dirname + '/../public'));
+var request = require('request');
+var reqPromise = require('request-promise');
+var Api = require('./helpers/github');
+var User = require('./models/user');
 
 var mapRepos = function (body) {
     return body.map((item) => {
@@ -24,13 +21,13 @@ var getRoot = function () {
     return __dirname + '/../repos';
 };
 
-app.get('/file', function (req, res) {
+router.get('/file', function (req, res) {
     var base = getRoot() + req.query.path;
     var str = fs.readFileSync(base).toString();
     res.send(str);
 });
 
-app.get('/files', function (req, res) {
+router.get('/files', function (req, res) {
     var base = getRoot() + req.query.path + '/';
     var items = fs.readdirSync(base).map((fileName) => {
         var stat = fs.statSync(base + fileName);
@@ -42,7 +39,7 @@ app.get('/files', function (req, res) {
     res.send(items);
 });
 
-app.get('/repolist', function (req, res) {
+router.get('/repolist', function (req, res) {
     var access_token = req.cookies.usk;
     var options = {
         headers: {
@@ -59,34 +56,38 @@ app.get('/repolist', function (req, res) {
     });
 });
 
-app.get('/repolist2', function (req, res) {
+router.get('/repolist2', function (req, res) {
     var mocks = require('./mock.json');
     res.send(mapRepos(mocks));
 });
 
-app.get('/callback', function (req, res) {
+router.get('/callback', function (req, res) {
     var code = req.query.code;
-    var options = {
-        headers: {
-            'User-Agent': 'request'
-        },
-        'method': 'POST',
-        url: 'https://github.com/login/oauth/access_token',
-        form: {
-            client_id: '6eb674e7c00e113821c2',
-            client_secret: '745b3b951c0e59a502d7d6aa862d1b9957844891',
-            code: code
+    var userData;
+    var token;
+    Api.login(code).then((accessToken) => {
+        token = accessToken;
+        return accessToken;
+    }).then((accessToken) => {
+        var api = new Api(accessToken);
+        return api.getUser();
+    }).then((data) => {
+        userData = data;
+        return User.findOne({email: data.email});
+    }).then((existingUser) => {
+        if (!existingUser) {
+            return User.createFromData(userData);
+        } else {
+            return existingUser;
         }
-    };
-    request(options, function (err, http, body) {
-        var obj = qs.parse(body);
-        res.cookie('usk', obj.access_token);
+    }).then(() => {
+        res.cookie('usk', token);
         res.redirect('/reposelect.html');
-
     });
+
 });
 
-app.post('/clonerepo', function (req, res) {
+router.post('/clonerepo', function (req, res) {
     var base = __dirname + '/../repos/';
     var data = req.body;
     if (!data.id || !data.clone_url || !data.name) {
@@ -103,6 +104,4 @@ app.post('/clonerepo', function (req, res) {
     }
 });
 
-app.listen(3000, function () {
-    console.log('http://localhost:3000/');
-});
+module.exports = router;
