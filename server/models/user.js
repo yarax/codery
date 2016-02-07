@@ -17,4 +17,4 @@ User.createFromData = function (data) {
     return user.save();
 };
 
-return User;
+module.exports = User;
