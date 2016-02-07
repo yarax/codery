@@ -13,7 +13,15 @@ var User = mongoose.model('User', userSchema);
 
 User.createFromData = function (data) {
     data.githubId = data.id;
-    var user = new User(data);
+    var user = new User({
+        avatar_url: data.avatar_url,
+        email: data.email,
+        name: data.email,
+        location: data.location,
+        followers: data.followers,
+        following: data.following,
+        githubId: data.id
+    });
     return user.save();
 };
 
