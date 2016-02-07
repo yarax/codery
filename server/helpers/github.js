@@ -23,7 +23,7 @@ class Api {
             }
         };
         return rp(getUserOption).then((str) => {
-            return JSON.encode(str);
+            return JSON.parse(str);
         });
     }
 
