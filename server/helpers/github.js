@@ -41,9 +41,8 @@ Api.login = function(code) {
         }
     };
 
-    return rp(options).then((http, body) => {
-        console.log('Respond body: ', body);
-        return qs.parse(body).access_token;
+    return rp(options).then((res) => {
+        return res[0].access_token;
     });
 };
 
