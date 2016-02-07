@@ -85,6 +85,9 @@ router.get('/callback', function (req, res) {
     }).then(() => {
         res.cookie('usk', token);
         res.redirect('/reposelect.html');
+    }).catch((err) => {
+        console.log(err);
+        res.redirect('/');
     });
 
 });

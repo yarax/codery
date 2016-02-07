@@ -14,5 +14,4 @@ User.createFromData = function (data) {
     var user = new User(data);
     return user.save();
 };
-
 return User;

@@ -42,7 +42,12 @@ Api.login = function(code) {
     };
 
     return rp(options).then((body) => {
-        return qs.parse(body).access_token;
+        var data = qs.parse(body);
+        if (data.accessToken) {
+            return data.access_token;
+        } else {
+            throw new Error(body);
+        }
     });
 };
 
