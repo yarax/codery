@@ -67,11 +67,13 @@ router.get('/callback', function (req, res) {
     var token;
     Api.login(code).then((accessToken) => {
         token = accessToken;
+        console.log('access token', accessToken);
         return accessToken;
     }).then((accessToken) => {
         var api = new Api(accessToken);
         return api.getUser();
     }).then((data) => {
+        console.log('user data', data);
         userData = data;
         return User.findOne({email: data.email});
     }).then((existingUser) => {

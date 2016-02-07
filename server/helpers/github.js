@@ -5,7 +5,7 @@
  * @type {request|exports|module.exports}
  */
 
-var reqPromise = require('request-promise');
+var rp = require('request-promise');
 var qs = require('querystring');
 
 class Api {
@@ -22,7 +22,7 @@ class Api {
                 'User-Agent': 'request'
             }
         };
-        return reqPromise(getUserOption);
+        return rp(getUserOption);
     }
 
 }
@@ -40,7 +40,8 @@ Api.login = function(code) {
             code: code
         }
     };
-    return reqPromise(options).then((http, body) => {
+
+    return rp(options).then((http, body) => {
         return qs.parse(body).access_token;
     });
 };
