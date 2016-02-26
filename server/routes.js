@@ -109,4 +109,15 @@ router.post('/clonerepo', function (req, res) {
     }
 });
 
+var chatId;
+router.post('/telegram', (req, res) => {
+	console.log(req.body);
+        chatId = req.body.message.chat.id;
+});
+
+router.emit = function (type, data) {
+	console.log('HERE', chatId);
+	request("https://api.telegram.org/bot145682125:AAHHCwyJV7w9M96FlaKkvj3zSAZ06h0mXZo/sendMessage?chat_id=" + chatId +"&text=" + data.data);
+}
+
 module.exports = router;
