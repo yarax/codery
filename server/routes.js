@@ -111,7 +111,7 @@ router.post('/clonerepo', function (req, res) {
 
 router.post('/telegram', (req, res) => {
     res.end();
-    global.chatId = req.body.message.chat.id;
+    global.setChatId(req.body.message.chat.id);
     var txt = req.body.message.text;
     var to = txt.match(/@(\d+)/);
     if (!to) return global.sendMessage('No id');
