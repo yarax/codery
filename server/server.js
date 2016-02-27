@@ -15,6 +15,10 @@ global.chatId = '99248986';
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 global.users = [];
+global.sendMessage = function (mes) {
+    var token = 'bot145682125:AAHHCwyJV7w9M96FlaKkvj3zSAZ06h0mXZo';
+    request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + mes);
+};
 
 io.on('connection', function (socket) {
     var id = users.length;
@@ -26,9 +30,8 @@ io.on('connection', function (socket) {
 
     var hs = socket.handshake;
     socket.on('new message', function (data) {
-        var token = 'bot145682125:AAHHCwyJV7w9M96FlaKkvj3zSAZ06h0mXZo';
         var txt = '[@' + id + '] ' + data;
-        request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + txt);
+        sendMessage(txt);
     });
 });
 

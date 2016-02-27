@@ -113,6 +113,7 @@ router.post('/telegram', (req, res) => {
     global.chatId = req.body.message.chat.id;
     var txt = req.body.message.text;
     var to = txt.match(/(@(\d+))/);
+    if (!to) return global.sendMessage('No id');
     var clear = txt.replace(/@\d+/, '');
     users[to[1]].emit('response', clear);
 });
