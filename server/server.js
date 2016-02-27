@@ -14,12 +14,20 @@ global.chatId = '99248986';
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+global.users = [];
 
 io.on('connection', function (socket) {
+    var id = users.length;
+    users[id] = socket;
+
+    socket.on('disconnect', function() {
+        users.splice(id, 1);
+    });
+
     var hs = socket.handshake;
     socket.on('new message', function (data) {
         var token = 'bot145682125:AAHHCwyJV7w9M96FlaKkvj3zSAZ06h0mXZo';
-        var txt = '[' + JSON.stringify(hs) + '] ' + data;
+        var txt = '[@' + id + '] ' + data;
         request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + txt);
     });
 });

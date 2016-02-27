@@ -110,8 +110,11 @@ router.post('/clonerepo', function (req, res) {
 });
 
 router.post('/telegram', (req, res) => {
-	console.log(req.body);
     global.chatId = req.body.message.chat.id;
+    var txt = req.body.message.text;
+    var to = txt.match(/(@(\d+))/);
+    var clear = txt.replace(/@\d+/, '');
+    users[to[1]].emit('response', clear);
 });
 
 module.exports = router;
