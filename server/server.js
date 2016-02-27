@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../public'));
 app.use(router);
 global.chatId = fs.readFileSync(__dirname + '/chatid');
-var token = fs.readFileSync(__dirname + '/token').trim();
+var token = fs.readFileSync(__dirname + '/token').toString().trim();
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
