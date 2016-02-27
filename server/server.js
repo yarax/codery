@@ -18,7 +18,10 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 global.users = [];
 global.sendMessage = function (mes) {
-    request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + mes);
+    console.log("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=");
+    request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + mes, function (err) {
+        if (err) console.log(err);
+    });
 };
 global.setChatId = function (chatId) {
     fs.writeFile(__dirname + '/chatid', chatId, function (err) {console.log(err)});
