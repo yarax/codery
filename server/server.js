@@ -12,13 +12,12 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../public'));
 app.use(router);
 global.chatId = fs.readFileSync(__dirname + '/chatid');
-var token = fs.readFileSync(__dirname + '/token');
+var token = fs.readFileSync(__dirname + '/token').trim();
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 global.users = [];
 global.sendMessage = function (mes) {
-    console.log("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=");
     request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + mes, function (err) {
         if (err) console.log(err);
     });
