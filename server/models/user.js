@@ -14,7 +14,9 @@ var User = mongoose.model('User', userSchema);
 User.createFromData = function (data) {
     data.githubId = data.id;
     var user = new User(data);
-    return user.save();
+    return user.save().then(() => {
+        return user;
+    });
 };
 
 module.exports = User;

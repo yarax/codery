@@ -8,7 +8,8 @@ module.exports = function (originState, action) {
             comments: [],
             files: {},
             unfoldFiles: {},
-            repolist: []
+            repolist: [],
+            user: {}
         };
     }
 

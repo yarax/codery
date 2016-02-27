@@ -7,6 +7,7 @@ var CommentBubble = React.createClass({
         store.dispatch({
             type: 'SET_COMMENT',
             text: this.refs.textarea.value,
+            user: store.getState().user,
             index: index
         });
     },
