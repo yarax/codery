@@ -2,10 +2,21 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var child = require('child_process');
+var config = require('config');
 var request = require('request');
 var reqPromise = require('request-promise');
 var Api = require('./helpers/github');
 var User = require('./models/user');
+
+var urls = {
+    getRepos: (access_token) => {
+        if (process.env === 'PRODUCTION') {
+            return 'https://api.github.com/user/repos?access_token=' + access_token;
+        } else {
+            return `http://${config.get('host')}:${config.get('port')}/test_repos.json`;
+        }
+    }
+};
 
 var mapRepos = function (body) {
     return body.map((item) => {
@@ -46,7 +57,7 @@ router.get('/repolist', function (req, res) {
             'User-Agent': 'request'
         },
         'method': 'GET',
-        url: 'https://api.github.com/user/repos?access_token=' + access_token
+        url: urls.getRepos(access_token)
     };
 
     request.get(options, function (err, http, body) {

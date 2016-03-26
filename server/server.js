@@ -4,56 +4,95 @@ var request = require('request');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var router = require('./routes');
+var config = require('config');
 var mongoose = require('mongoose');
-var fs = require('fs');
+
+var graphql = require('graphql');
+var graphqlHTTP = require('express-graphql');
+var userFields = {
+    id: { type: graphql.GraphQLString },
+    name: { type: graphql.GraphQLString },
+    pass: {
+        type: graphql.GraphQLString,
+        resolve: (model, query) => {
+            return '******';
+        }
+    }
+};
+var userType = new graphql.GraphQLObjectType({
+    name: 'User',
+    fields: userFields
+});
+
+var users = {
+    13: {
+        name: "Loser",
+        id: 13,
+        pass: '123',
+        money: 100
+    },
+    7: {
+        name: "Lucky",
+        id: 7,
+        pass: '321',
+        money: 1000
+    }
+};
+
+var schema = new graphql.GraphQLSchema({
+    query: new graphql.GraphQLObjectType({
+        name: 'Query',
+        fields: {
+            user: {
+                type: userType,
+                args: {
+                    id: { type: graphql.GraphQLString }
+                },
+                resolve: function (schema, args) {
+                    return users[args.id];
+                }
+            }
+        }
+    }),
+    mutation: new graphql.GraphQLObjectType({
+        name: 'UserMutation',
+        fields: {
+            addUser: {
+                type: userType,
+                args: userFields,
+                description: 'Add a new user',
+                resolve: (schema, item) => {
+                    item.id = item.id || Object.keys(users).length + 1;
+                    users[item.id] = item;
+                    return item;
+                }
+            }
+        }
+    })
+});
+
+app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true, graphiql: true }));
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../public'));
 app.use(router);
-global.chatId = fs.readFileSync(__dirname + '/chatid');
-var token = fs.readFileSync(__dirname + '/token').toString().trim();
 
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-global.users = [];
-global.sendMessage = function (mes) {
-    request("https://api.telegram.org/" + token + "/sendMessage?chat_id=" + global.chatId +"&text=" + mes, function (err) {
-        if (err) console.log(err);
-    });
-};
-global.setChatId = function (chatId) {
-    fs.writeFile(__dirname + '/chatid', chatId, function (err) {console.log(err)});
-};
-global.sendBack = function (id, mes) {
-    users[id].lastMessage = 0;
-    users[id].emit('response', mes);
-};
-io.on('connection', function (socket) {
-    socket.lastMessage = 0;
-    var id = users.length;
-    users[id] = socket;
-
-    socket.on('close', function() {
-        users.splice(id, 1);
-    });
-
-    var hs = socket.handshake;
-    socket.on('new message', function (data) {
-        var txt = '[@' + id + '] ' + data;
-        socket.lastMessage = Date.now();
-        setTimeout(function () {
-            if (socket.lastMessage !== 0) {
-                sendBack(id, "Sorry, I'm offline");
-            }
-        }, 10000);
-        sendMessage(txt);
-    });
+app.use((err, req, res, next) => {
+    console.log(err);
 });
+var server;
 
-server.listen(3000, () => {
+if (process.env === 'PRODUCTION') {
+    server = require('./socket.js');
+} else {
+    server = app;
+}
+
+server.listen(config.get('port'), config.get('host'), () => {
 
     mongoose.connect('mongodb://localhost/codery', () => {
-        console.log('http://localhost:3000/');
+        console.log(`http://${config.get('host')}:${config.get('port')}/`);
     });
 });
