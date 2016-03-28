@@ -11,6 +11,7 @@
     "body-parser": "^1.14.2",
     "config": "^1.19.0",
     "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-graphql": "^0.4.13",
     "graphql": "^0.4.18",

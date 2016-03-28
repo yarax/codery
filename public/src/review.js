@@ -10,5 +10,14 @@ function render () {
     );
 }
 
+store.dispatch({
+    type: 'SET_REPO_ID'
+});
+store.dispatch({
+    type: 'SET_FILE_LIST',
+    files: window.filesToDisplay,
+    root: '/' + window.rootDir
+});
+
 render();
 store.subscribe(render);

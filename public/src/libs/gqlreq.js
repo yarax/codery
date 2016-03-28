@@ -13,7 +13,7 @@ module.exports = (query, cb) => {
         if (result.errors) {
             console.log(result.errors[0].message);
         } else {
-            cb(result);
+            cb(result.data);
         }
     });
 };

@@ -17,9 +17,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../public'));
 app.use(router);
+app.set('view engine', 'ejs');
 
 app.use((err, req, res, next) => {
-    console.log(err);
+    console.log(err.message, err.stack);
     res.status(500);
     res.send(err);
 });

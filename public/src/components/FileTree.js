@@ -3,7 +3,7 @@ let store = require('../redux/store');
 let CodeBar = require('./CodeBar');
 let $ = require('jquery');
 var globalIt = 0;
-var hashId = window.location.href.match(/#(\d+)$/)[1];
+let GQLReq = require('../libs/gqlreq');
 var FileTree = React.createClass({
 
     dirClick: function (itemName, id, event) {
@@ -31,18 +31,43 @@ var FileTree = React.createClass({
 
     fileClick: function (name) {
         let root = this.getRoot();
+        store.dispatch({
+            type: 'SELECTED_FILE',
+            name: name
+        });
         $.get('/file/?path=' + encodeURIComponent(root + '/' + name), (resp) => {
-
             store.dispatch({
                 type: 'BUILD_ROWS',
                 text: resp
             });
 
+            var query = `
+                query {
+                  comments(repo: "${store.getState().repoId}", file: "${store.getState().selectedFile}") {
+                    author,
+                    text,
+                    line,
+                    date
+                  }
+                }`;
+            GQLReq(query, (result) => {
+                if (!result.comments) return;
+                result.comments.forEach((item, i) => {
+                    store.dispatch({
+                        type: 'SET_COMMENT',
+                        file: store.getState().selectedFile,
+                        text: item.text,
+                        author: item.author,
+                        index: item.line,
+                        date: item.date
+                    });
+                });
+            });
         });
     },
 
     getRoot: function () {
-        return this.props.root || '/' + hashId;
+        return this.props.root || '/' + store.getState().repoId;
     },
 
     itemClick: function (item, id, event) {

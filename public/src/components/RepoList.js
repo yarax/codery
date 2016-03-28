@@ -27,7 +27,7 @@ let RepoList = React.createClass({
             if (resp.error) {
                 alert(resp.error);
             } else if (resp.repoId) {
-                window.location = '/review.html#' + resp.repoId;
+                window.location = '/review/' + resp.repoId;
             } else {
                 alert('No repo id');
             }

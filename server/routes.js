@@ -8,28 +8,20 @@ var reqPromise = require('request-promise');
 var Api = require('./helpers/github');
 var User = require('./models/user');
 
-var urls = {
-    getRepos: (access_token) => {
-        if (process.env === 'PRODUCTION') {
-            return 'https://api.github.com/user/repos?access_token=' + access_token;
-        } else {
-            return `http://${config.get('host')}:${config.get('port')}/test_repos.json`;
-        }
-    }
-};
-
-var mapRepos = function (body) {
-    return body.map((item) => {
-        return {
-            name: item.full_name,
-            clone_url: item.clone_url,
-            id: item.id
-        }
-    });
-};
-
 var getRoot = function () {
     return __dirname + '/../repos';
+};
+
+var getFiles = function (path) {
+    var base = `${getRoot()}/${path}/`;
+    var items = fs.readdirSync(base).map((fileName) => {
+        var stat = fs.statSync(base + fileName);
+        return {
+            name: fileName,
+            type: stat.isDirectory() ? 'dir' : 'file'
+        }
+    });
+    return items;
 };
 
 router.get('/file', function (req, res) {
@@ -39,32 +31,15 @@ router.get('/file', function (req, res) {
 });
 
 router.get('/files', function (req, res) {
-    var base = getRoot() + req.query.path + '/';
-    var items = fs.readdirSync(base).map((fileName) => {
-        var stat = fs.statSync(base + fileName);
-        return {
-            name: fileName,
-            type: stat.isDirectory() ? 'dir' : 'file'
-        }
-    });
+    var items = getFiles(req.query.path);
     res.send(items);
 });
 
-router.get('/repolist', function (req, res) {
-    var access_token = req.cookies.usk;
-    var options = {
-        headers: {
-            'User-Agent': 'request'
-        },
-        'method': 'GET',
-        url: urls.getRepos(access_token)
-    };
-
-    request.get(options, function (err, http, body) {
-        body = JSON.parse(body);
-        var items = mapRepos(body);
-        res.send(items);
-    });
+router.get('/repolist', function (req, res, next) {
+    var api = new Api(req.cookies.usk);
+    api.repolist().then((items) => {
+        res.json(items)
+    }).catch(next);
 });
 
 router.get('/repolist2', function (req, res) {
@@ -144,6 +119,11 @@ router.post('/telegram', (req, res) => {
     var clear = txt.replace(/@\d+/, '');
     global.sendBack(to[1], clear);
     res.end();
+});
+
+router.get('/review/:id', (req, res, next) => {
+    var items = getFiles(req.params.id);
+    res.render('review');
 });
 
 module.exports = router;

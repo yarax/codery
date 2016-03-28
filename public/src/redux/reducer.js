@@ -9,7 +9,9 @@ module.exports = function (originState, action) {
             files: {},
             unfoldFiles: {},
             repolist: [],
-            user: {}
+            user: {},
+            selectedFile: null,
+            repoId: null
         };
     }
 
@@ -26,7 +28,8 @@ module.exports = function (originState, action) {
             break;
         case 'SET_COMMENT':
             state.bubbles[action.index] = false;
-            state.comments[action.index] = action.text;
+            state.comments[action.file] = state.comments[action.file] || {};
+            state.comments[action.file][action.index] = action;
             break;
         case 'SET_FILE_LIST':
             state.files[action.root] = action.files;
@@ -39,6 +42,12 @@ module.exports = function (originState, action) {
             break;
         case 'SET_REPOLIST':
             state.repolist = action.items;
+            break;
+        case 'SELECTED_FILE':
+            state.selectedFile = action.name;
+            break;
+        case 'SET_REPO_ID':
+            state.repoId = window.location.href.match(/\/(\d+)$/)[1];
             break;
 
 

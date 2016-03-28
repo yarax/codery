@@ -5,18 +5,24 @@ let GQLReq = require('../libs/gqlreq');
 var CommentBubble = React.createClass({
 
     setComment: function (index) {
+        console.log('USER', store.getState().user);
         var query = `mutation {
-                      addComment(author: "${store.getState().user}", repo: "repo1", file: "file1", text: "${this.refs.textarea.value}", line: ${index}) {
+                      addComment(author: "${store.getState().user}", repo: "${store.getState().repoId}", file: "${store.getState().selectedFile}", text: "${this.refs.textarea.value}", line: ${index}) {
                         author,
-                        text
+                        text,
+                        line,
+                        date
                       }
                     }`;
-        GQLReq(query, () => {
+        GQLReq(query, (data) => {
+            var comment = data.addComment;
             store.dispatch({
                 type: 'SET_COMMENT',
-                text: this.refs.textarea.value,
-                user: store.getState().user,
-                index: index
+                file: store.getState().selectedFile,
+                text: comment.text,
+                author: comment.author,
+                index: comment.line,
+                date: comment.date
             });
         });
     },

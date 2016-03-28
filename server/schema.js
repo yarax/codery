@@ -5,7 +5,8 @@ var commentFields = {
     repo: { type: graphql.GraphQLString },
     file: { type: graphql.GraphQLString },
     text: { type: graphql.GraphQLString },
-    line: {type: graphql.GraphQLInt}
+    line: {type: graphql.GraphQLInt},
+    date: {type: graphql.GraphQLString}
 };
 var commentType = new graphql.GraphQLObjectType({
     name: 'Comment',
@@ -25,7 +26,6 @@ var schema = new graphql.GraphQLSchema({
                     file: { type: graphql.GraphQLString }
                 },
                 resolve: function (schema, args) {
-                    console.log(comments['repo1']['file1']);
                     return comments[args.repo][args.file];
                 }
             }
@@ -39,6 +39,9 @@ var schema = new graphql.GraphQLSchema({
                 args: commentFields,
                 description: 'Add a new comment',
                 resolve: (schema, item) => {
+                    var dt = new Date();
+                    item.date = `${dt.getDate()}.${dt.getMonth()}.${dt.getFullYear()}`;
+                    item.author = 'TestUser';
                     comments[item.repo] = comments[item.repo] || {};
                     comments[item.repo][item.file] = comments[item.repo][item.file] || [];
                     comments[item.repo][item.file].push(item);
