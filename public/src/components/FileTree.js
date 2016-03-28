@@ -75,7 +75,6 @@ var FileTree = React.createClass({
                 let branch = root + '/' + item.name;
 
                 let alreadyOpenedOrRootDir = store.getState().unfoldFiles[id]/* || (files.length === 1 && files[0].type === 'dir');*/
-                console.log('RENDER', store.getState().unfoldFiles, id);
 
                 let children = item.type === 'dir' && alreadyOpenedOrRootDir ? <FileTree root={branch}/> : '';
                 return <div key={i} id={id} className={item.type} onClick={this.itemClick.bind(this, item, id)}>

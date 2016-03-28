@@ -9,68 +9,7 @@ var mongoose = require('mongoose');
 
 var graphql = require('graphql');
 var graphqlHTTP = require('express-graphql');
-var userFields = {
-    id: { type: graphql.GraphQLString },
-    name: { type: graphql.GraphQLString },
-    pass: {
-        type: graphql.GraphQLString,
-        resolve: (model, query) => {
-            return '******';
-        }
-    }
-};
-var userType = new graphql.GraphQLObjectType({
-    name: 'User',
-    fields: userFields
-});
-
-var users = {
-    13: {
-        name: "Loser",
-        id: 13,
-        pass: '123',
-        money: 100
-    },
-    7: {
-        name: "Lucky",
-        id: 7,
-        pass: '321',
-        money: 1000
-    }
-};
-
-var schema = new graphql.GraphQLSchema({
-    query: new graphql.GraphQLObjectType({
-        name: 'Query',
-        fields: {
-            user: {
-                type: userType,
-                args: {
-                    id: { type: graphql.GraphQLString }
-                },
-                resolve: function (schema, args) {
-                    return users[args.id];
-                }
-            }
-        }
-    }),
-    mutation: new graphql.GraphQLObjectType({
-        name: 'UserMutation',
-        fields: {
-            addUser: {
-                type: userType,
-                args: userFields,
-                description: 'Add a new user',
-                resolve: (schema, item) => {
-                    item.id = item.id || Object.keys(users).length + 1;
-                    users[item.id] = item;
-                    return item;
-                }
-            }
-        }
-    })
-});
-
+var schema = require('./schema');
 app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true, graphiql: true }));
 
 app.use(cookieParser());
@@ -81,6 +20,8 @@ app.use(router);
 
 app.use((err, req, res, next) => {
     console.log(err);
+    res.status(500);
+    res.send(err);
 });
 var server;
 

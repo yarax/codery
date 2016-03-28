@@ -13,8 +13,6 @@ module.exports = function (originState, action) {
         };
     }
 
-    console.log('Reducing action', action.type);
-
     let state = Object.assign(originState);
 
     switch (action.type) {

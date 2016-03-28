@@ -103,16 +103,31 @@ router.get('/callback', function (req, res) {
 
 });
 
-router.post('/clonerepo', function (req, res) {
+router.post('/clonerepo', function (req, res, next) {
     var base = __dirname + '/../repos/';
     var data = req.body;
+    var rev = req.query.rev;
     if (!data.id || !data.clone_url || !data.name) {
         return res.send({error: 'Not valid incoming data'});
     }
+    if (!data.id.toString().match(/^\d+$/)) {
+        throw new Error('Wrong repo id');
+    }
+    if (rev.match(/[ \\\'\"\&]+/)) {
+        throw new Error('Invalid branch name');
+    }
+    if (data.clone_url.match(/[ \\\'\"]+/)) {
+        throw new Error('Invalid clone url name');
+    }
+    var cmd = `cd "${base}" && mkdir "${data.id}" && `;
+    var cmd = 'cd ' + base + ' && mkdir ' + data.id + ' && cd ' + data.id + ' && git clone ' + data.clone_url + ' && git checkout ' + rev;
+    console.log(cmd);
     if (!fs.existsSync(base + data.id)) {
-        var cmd = 'cd ' + base + ' && mkdir ' + data.id + ' && cd ' + data.id + ' && git clone ' + data.clone_url;
-        console.log(cmd);
-        child.exec(cmd, function () {
+        child.exec(cmd, function (err) {
+            if (err) {
+                console.log(err);
+                return next(`Can't clone repo`);
+            }
             return res.send({repoId: data.id});
         });
     } else {
