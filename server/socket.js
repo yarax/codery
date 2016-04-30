@@ -1,3 +1,5 @@
+var request = require('request');
+
 module.exports = function (app) {
     var fs = require('fs');
     global.chatId = fs.readFileSync(__dirname + '/chatid');
