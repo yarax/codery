@@ -21,6 +21,7 @@ module.exports = function (app) {
         users[id].emit('response', mes);
     };
     io.on('connection', function (socket) {
+        console.log('Connected');
         socket.lastMessage = 0;
         var id = users.length;
         users[id] = socket;
@@ -31,6 +32,7 @@ module.exports = function (app) {
 
         var hs = socket.handshake;
         socket.on('new message', function (data) {
+            console.log('new mes', data);
             var txt = '[@' + id + '] ' + data;
             socket.lastMessage = Date.now();
             setTimeout(function () {
