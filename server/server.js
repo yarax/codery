@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
 });
 var server;
 
-if (process.env === 'PRODUCTION') {
+if (process.env.NODE_ENV === 'PRODUCTION') {
     server = require('./socket.js');
 } else {
     server = app;
