@@ -10,12 +10,12 @@ let CodeRow = React.createClass({
             type: 'SHOW_BUBBLE',
             index: index
         });
+        return false;
     },
 
     render: function () {
         let i = this.props.index + 1;
         let line = this.props.line;
-        let comment = store.getState().comments[i];
         return <tr key={i}>
             <td onClick={this.commentBubble.bind(this, i)} className='line-num'><span>{i}</span></td>
             <td>

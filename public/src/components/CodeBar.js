@@ -1,16 +1,17 @@
 let React = require('react');
 let CodeRow = require('./CodeRow');
-let $ = require('jquery');
 let store = require('../redux/store');
-console.log("RAX", store);
 
 var CodeBar = React.createClass({
+
+    componentDidUpdate: function () {
+
+    },
 
     render: function () {
         let rows = store.getState().rows.map(function (line, i) {
             return <CodeRow key={i} index={i} line={line}/>;
         });
-        console.log('Render CodeBar', rows);
         return (
             <div className="cute-table-container">
             <table className="cute-table">

@@ -1,16 +1,12 @@
-body {
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}
-
-h1 {
-    font-size:16px;
-}
-
-.container div {
+.container .item {
     font-size:12px;
     padding: 10px;
     cursor: pointer;
     border-bottom: solid 1px #cccccc;
+}
+.container .revision {
+    display:none;
+    margin: 10px 0
 }
 .container div:hover {
     background-color: #eeeeee;

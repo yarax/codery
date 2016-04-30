@@ -13,12 +13,21 @@ let RepoList = React.createClass({
         })
     },
 
-    repoClick: function (item) {
-        $.post('/clonerepo', item, function (resp) {
+    repoClick: function (i, event) {
+        $(event.target).next('div').toggle(() => {
+            var inpt = $(event.target).parent().find("input");
+            inpt.focus();
+            inpt.val(inpt.val());
+        });
+    },
+
+    goToReview: function (i, item, event) {
+        var val = $(event.target).parent().find("input").val();
+        $.post('/clonerepo?rev=' + val, item, function (resp) {
             if (resp.error) {
                 alert(resp.error);
             } else if (resp.repoId) {
-                window.location = '/review.html#' + resp.repoId;
+                window.location = '/review/' + resp.repoId;
             } else {
                 alert('No repo id');
             }
@@ -27,7 +36,14 @@ let RepoList = React.createClass({
 
     render: function () {
         let items = store.getState().repolist.map((item, i) => {
-            return <div onClick={this.repoClick.bind(this, item)} key={i}>{item.name}</div>
+            var inputRef = `rev${i}`;
+            return <div className="item" key={i}>
+                    <div onClick={this.repoClick.bind(this, i)}>{item.name}</div>
+                    <div className="revision">
+                        <input defaultValue="master"/>
+                        <button onClick={this.goToReview.bind(this, i, item)}>OK</button>
+                    </div>
+                </div>
         });
 
         return <div className="container">

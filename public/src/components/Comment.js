@@ -4,11 +4,13 @@ var Comment = React.createClass({
 
     render: function () {
         let index = this.props.index;
-        let comment = store.getState().comments[index];
-        if (comment) {
+        let file = store.getState().selectedFile;
+        let fileComment = store.getState().comments[file];
+        if (fileComment && fileComment[index]) {
+            let comment = fileComment[index];
             return <div className="comment">
-                <div className="comment-header"><name>Roman</name><date>29.01.2016</date></div>
-                {comment}
+                <div className="comment-header"><name>{comment.author}</name><date>{comment.date}</date></div>
+                {comment.text}
             </div>
         } else {
             return <span></span>

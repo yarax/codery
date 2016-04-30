@@ -7,6 +7,17 @@
 
 var rp = require('request-promise');
 var qs = require('querystring');
+var config = require('config');
+
+var urls = {
+    getRepos: (access_token) => {
+        if (process.env === 'PRODUCTION') {
+            return 'https://api.github.com/user/repos?access_token=' + access_token;
+        } else {
+            return `http://${config.get('host')}:${config.get('port')}/test_repos.json`;
+        }
+    }
+};
 
 class Api {
 
@@ -24,6 +35,31 @@ class Api {
         };
         return rp(getUserOption).then((str) => {
             return JSON.parse(str);
+        });
+    }
+
+    repolist() {
+        var mapRepos = function (body) {
+            return body.map((item) => {
+                return {
+                    name: item.full_name,
+                    clone_url: item.clone_url,
+                    id: item.id
+                }
+            });
+        };
+
+        var options = {
+            headers: {
+                'User-Agent': 'request'
+            },
+            'method': 'GET',
+            url: urls.getRepos(this.accessToken)
+        };
+
+        return rp.get(options).then(function (body) {
+            body = JSON.parse(body);
+            return mapRepos(body);
         });
     }
 
